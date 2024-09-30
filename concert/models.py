@@ -6,15 +6,46 @@ from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
+CHARFIELD_LEN = 255
+LONG_CHARFIELD_LEN = 1000
 
 class Concert(models.Model):
-    # concert_name
-    # duration
-    # city
-    # date
+    """concert model"""
+    concert_name = models.CharField(max_length=CHARFIELD_LEN)
+    duration = models.IntegerField()
+    city = models.CharField(max_length=CHARFIELD_LEN)
+    date = models.DateField(default=datetime.now)
 
     def __str__(self):
         return self.concert_name
+    
+class Photo(models.Model):
+    """photo model"""
+    id = models.IntegerField(primary_key=True)
+    pic_url = models.CharField(max_length=LONG_CHARFIELD_LEN)
+    event_country = models.CharField(max_length=CHARFIELD_LEN)
+    event_state = models.CharField(max_length=CHARFIELD_LEN)
+    event_city = models.CharField(max_length=CHARFIELD_LEN)
+    event_date = models.DateField(default=datetime.now)
+
+    class Meta:
+        managed = False
+
+    def __str__(self):
+        return self.pic_url
+
+
+class Song(models.Model):
+    """song model"""
+    id = models.IntegerField(primary_key=True)
+    title = models.CharField(max_length=CHARFIELD_LEN)
+    lyrics = models.TextField()
+
+    class Meta:
+        managed = False
+
+    def __str__(self):
+        return self.title
 
 
 class ConcertAttending(models.Model):
@@ -38,30 +69,3 @@ class ConcertAttending(models.Model):
 
     def __str__(self):
         return self.attending
-
-
-class Photo(models.Model):
-    # id
-    # pic_url
-    # event_country
-    # event_state
-    # event_city
-    # event_date
-
-    class Meta:
-        managed = False
-
-    def __str__(self):
-        return self.pic_url
-
-
-class Song(models.Model):
-    # id
-    # title
-    # lyrics
-
-    class Meta:
-        managed = False
-
-    def __str__(self):
-        return self.title
